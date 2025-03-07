@@ -5,7 +5,7 @@ if (__DEV__) {
 import React from 'react';
 import './global.css';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import {NavigationContainer, RouteProp} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from './src/screens/HomeScreen/HomeScreen';
 import ScreenHeader from './src/components/ScreenHeader/ScreenHeader';

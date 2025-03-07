@@ -3,16 +3,14 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../../App';
 
-import {difficulties} from '../../data/data';
+import {difficulties, textColor} from '../../data/data';
 
 type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   return (
     <View className="flex-1 items-center  bg-lightBg dark:bg-darkBg gap-2">
-      <Text className="text-2xl text-black dark:text-white">
-        Choose Difficulty
-      </Text>
+      <Text className={`text-2xl ${textColor}`}>Choose Difficulty</Text>
       {difficulties.map((difficulty, index) => (
         <TouchableOpacity
           key={difficulty.difficulty + index}

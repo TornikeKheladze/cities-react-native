@@ -12,6 +12,8 @@ export type City = {
   regionWdId: string;
   type: string;
   wikiDataId: string;
+  temp?: number;
+  correct: boolean;
 };
 
 export type Difficulty = {
