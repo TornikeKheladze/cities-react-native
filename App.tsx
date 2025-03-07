@@ -1,15 +1,20 @@
+if (__DEV__) {
+  require('./ReactotronConfig');
+}
+
 import React from 'react';
 import './global.css';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {NavigationContainer, RouteProp} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import HomeScreen from './src/screens/HomeScreen';
-import DetailsScreen from './src/screens/DetailsScreen';
+import HomeScreen from './src/screens/HomeScreen/HomeScreen';
 import ScreenHeader from './src/components/ScreenHeader/ScreenHeader';
+import QuestionScreen from './src/screens/QuestionScreen/QuestionScreen';
+import {Difficulty} from './src/types/shared';
 
 export type RootStackParamList = {
   Home: undefined;
-  Details: {itemId: number; message: string};
+  Question: {difficulty: Difficulty};
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -27,9 +32,9 @@ function App(): React.JSX.Element {
             options={{title: 'Welcome', header: () => <ScreenHeader />}}
           />
           <Stack.Screen
-            name="Details"
-            component={DetailsScreen}
-            options={{title: 'Details', header: () => <ScreenHeader />}}
+            name="Question"
+            component={QuestionScreen}
+            options={{title: 'Question', header: () => <ScreenHeader />}}
           />
         </Stack.Navigator>
       </NavigationContainer>

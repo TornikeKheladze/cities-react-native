@@ -13,3 +13,11 @@ export type City = {
   type: string;
   wikiDataId: string;
 };
+
+export type Difficulty = {
+  difficulty: 'hard' | 'medium' | 'easy';
+  numberOfQuestions: 10 | 15 | 20;
+  allowedMistakes: 1;
+  hints: 0 | 1;
+  possibleVariants: 2 | 3 | 4;
+};

@@ -1,25 +1,39 @@
-import {Text, Pressable} from 'react-native';
+import {Text} from 'react-native';
 import React from 'react';
 import {useColorScheme} from 'nativewind';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import SwitchToggle from 'react-native-switch-toggle';
 
 const ScreenHeader = () => {
   const {colorScheme, setColorScheme} = useColorScheme();
 
   return (
-    <SafeAreaView className="bg-lightBg dark:bg-darkBg">
-      <Text className="text-black dark:text-white text-xl">
-        {colorScheme === 'dark' ? 'Dark Mode' : 'Light Mode'}
-      </Text>
-      <Pressable
+    <SafeAreaView className="bg-lightBg dark:bg-darkBg p-3">
+      <Text className="text-black dark:text-white">Toggle Theme</Text>
+      <SwitchToggle
+        switchOn={colorScheme === 'dark' ? true : false}
         onPress={() =>
           setColorScheme(colorScheme === 'dark' ? 'light' : 'dark')
         }
-        className="mt-4 px-4 py-2 rounded-lg bg-blue-500">
-        <Text className="text-white">Toggle Theme</Text>
-      </Pressable>
+        containerStyle={containerStyle}
+        circleStyle={circleStyle}
+      />
     </SafeAreaView>
   );
+};
+
+const containerStyle = {
+  marginTop: 16,
+  width: 60,
+  height: 30,
+  borderRadius: 25,
+  paddingRight: 50,
+};
+
+const circleStyle = {
+  width: 25,
+  height: 25,
+  borderRadius: 25,
 };
 
 export default ScreenHeader;
