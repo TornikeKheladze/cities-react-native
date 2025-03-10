@@ -146,12 +146,15 @@ const QuestionScreen: React.FC<QuestionScreenProps> = ({route, navigation}) => {
       }
     } else {
       if (allowedMistakes === 0) {
-        Alert.alert('You Lost', 'Do You Want To Try Again?', [
-          {
-            text: 'Try Again',
-            onPress: () => navigation.navigate('Home'),
-          },
-        ]);
+        setOpenedCardIds(renderedCityIds);
+        setTimeout(() => {
+          Alert.alert('You Lost', 'Do You Want To Try Again?', [
+            {
+              text: 'Try Again',
+              onPress: () => navigation.navigate('Home'),
+            },
+          ]);
+        }, 2000);
       } else {
         setAllowedMistakes(prevState => prevState - 1);
       }
@@ -173,8 +176,8 @@ const QuestionScreen: React.FC<QuestionScreenProps> = ({route, navigation}) => {
       <View className="flex-row flex-wrap gap-2 items-center justify-center">
         {renderableList.map((city, index) => (
           <TouchableOpacity
+            className="h-[150px]"
             key={index + city.id}
-            className="border rounded-md border-black dark:border-white basis-[40%] items-center p-1 min-h-24"
             onPress={() => guessHandler(city as City)}>
             <Card
               city={city as City}
