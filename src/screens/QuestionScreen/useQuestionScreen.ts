@@ -2,16 +2,10 @@ import {useEffect, useMemo, useState} from 'react';
 import {Alert} from 'react-native';
 import {useQueries, useQuery} from '@tanstack/react-query';
 import {getCities, getWeatherData} from '../../axios';
-import {City} from '../../types/shared';
+import {City, History} from '../../types/shared';
 import {UseQuestionScreen} from './types';
-
-function getRandomInt(min: number, max: number, exclude?: number): number {
-  let random: number;
-  do {
-    random = Math.floor(Math.random() * (max - min + 1)) + min;
-  } while (exclude !== undefined && random === exclude);
-  return random;
-}
+import {storage} from '../../storage/storage';
+import {getRandomInt, saveHistoryToStorage} from './helpers';
 
 export const useQuestionScreen: UseQuestionScreen = (route, navigation) => {
   const {difficulty} = route.params;
@@ -22,6 +16,10 @@ export const useQuestionScreen: UseQuestionScreen = (route, navigation) => {
     difficulty.allowedMistakes,
   );
   const [hints, sethints] = useState<number>(difficulty.hints);
+  const [currentHistory, setcurrentHistory] = useState<{}[]>([]);
+  const prevHistory: History[] = storage.getString('history')
+    ? JSON.parse(storage.getString('history') || '')
+    : [];
 
   const [openedCardIds, setOpenedCardIds] = useState<number[]>([]);
 
@@ -123,9 +121,23 @@ export const useQuestionScreen: UseQuestionScreen = (route, navigation) => {
     }
     const renderedCityIds = isCitiesAvailable ? cities.map(c => c.id) : [];
     setOpenedCardIds(prevState => [...prevState, city.id]);
+
     if (city.correct) {
-      setOpenedCardIds(renderedCityIds);
+      setcurrentHistory(prevState => {
+        return [...prevState, {cities: renderableList, userAnswer: city.id}];
+      });
+      setTimeout(() => {
+        setOpenedCardIds(renderedCityIds);
+      }, 500);
       if (questionCount === difficulty.numberOfQuestions) {
+        saveHistoryToStorage(
+          prevHistory,
+          difficulty,
+          currentHistory,
+          renderableList,
+          city.id,
+          true,
+        );
         Alert.alert('You Won', 'Do You Want To Try Again?', [
           {
             text: 'Try Again',
@@ -135,11 +147,19 @@ export const useQuestionScreen: UseQuestionScreen = (route, navigation) => {
       } else {
         setTimeout(() => {
           setQuestionCount(prevState => prevState + 1);
-        }, 2000);
+        }, 2500);
       }
     } else {
       if (allowedMistakes === 0) {
         setOpenedCardIds(renderedCityIds);
+        saveHistoryToStorage(
+          prevHistory,
+          difficulty,
+          currentHistory,
+          renderableList,
+          city.id,
+          false,
+        );
         setTimeout(() => {
           Alert.alert('You Lost', 'Do You Want To Try Again?', [
             {
@@ -153,6 +173,8 @@ export const useQuestionScreen: UseQuestionScreen = (route, navigation) => {
       }
     }
   };
+
+  // storage.clearAll();
 
   const onHintPress = () => {
     if (hints === 0) {

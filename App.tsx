@@ -10,11 +10,15 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from './src/screens/HomeScreen/HomeScreen';
 import ScreenHeader from './src/components/ScreenHeader/ScreenHeader';
 import QuestionScreen from './src/screens/QuestionScreen/QuestionScreen';
-import {Difficulty} from './src/types/shared';
+import {Difficulty, History} from './src/types/shared';
+import HistoryScreen from './src/screens/HistoryScreen/HistoryScreen';
+import HistoryDetails from './src/screens/HistoryScreen/HistoryDetails';
 
 export type RootStackParamList = {
   Home: undefined;
   Question: {difficulty: Difficulty};
+  History: undefined;
+  HistoryDetails: {history: History};
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -35,6 +39,16 @@ function App(): React.JSX.Element {
             name="Question"
             component={QuestionScreen}
             options={{title: 'Question', header: () => <ScreenHeader />}}
+          />
+          <Stack.Screen
+            name="History"
+            component={HistoryScreen}
+            options={{title: 'History', header: () => <ScreenHeader />}}
+          />
+          <Stack.Screen
+            name="HistoryDetails"
+            component={HistoryDetails}
+            options={{title: 'HistoryDetails', header: () => <ScreenHeader />}}
           />
         </Stack.Navigator>
       </NavigationContainer>

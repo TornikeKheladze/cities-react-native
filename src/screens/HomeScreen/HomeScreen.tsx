@@ -25,6 +25,12 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
           </Text>
         </TouchableOpacity>
       ))}
+
+      <TouchableOpacity
+        onPress={() => navigation.navigate('History')}
+        className="bg-blue-500 p-3 rounded-2xl mt-36">
+        <Text className="text-white">History</Text>
+      </TouchableOpacity>
     </View>
   );
 };

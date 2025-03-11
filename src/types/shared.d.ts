@@ -23,3 +23,16 @@ export type Difficulty = {
   hints: 0 | 1;
   possibleVariants: 2 | 3 | 4;
 };
+
+export type Question = {
+  cities: City[];
+  userAnswer: number;
+};
+
+export type History = {
+  id: number;
+  questions: Question[];
+  difficulty: Difficulty;
+  time: string;
+  won: boolean;
+};

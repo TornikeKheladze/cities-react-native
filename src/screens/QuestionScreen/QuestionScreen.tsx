@@ -28,7 +28,7 @@ const QuestionScreen: React.FC<QuestionScreenProps> = ({route, navigation}) => {
     <View className="flex-1 gap-4 items-center bg-lightBg dark:bg-darkBg p-3">
       <View className="flex-row justify-between w-full mb-4">
         <Text className={textColor}>Allowed Mistakes:{allowedMistakes}</Text>
-        <Text className={`${textColor}`}>
+        <Text className={textColor}>
           Question N: {questionCount}/{difficulty.numberOfQuestions}
         </Text>
       </View>

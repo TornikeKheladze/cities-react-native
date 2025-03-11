@@ -1,39 +1,31 @@
-import {Text} from 'react-native';
+import {Switch, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {useColorScheme} from 'nativewind';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import SwitchToggle from 'react-native-switch-toggle';
+import {BackButtonIcon} from '../../assets/svg';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 const ScreenHeader = () => {
   const {colorScheme, setColorScheme} = useColorScheme();
+  const {goBack} = useNavigation();
+  const {name} = useRoute();
 
   return (
-    <SafeAreaView className="bg-lightBg dark:bg-darkBg p-3">
-      <Text className="text-black dark:text-white">Toggle Theme</Text>
-      <SwitchToggle
-        switchOn={colorScheme === 'dark' ? true : false}
-        onPress={() =>
+    <SafeAreaView className="bg-lightBg dark:bg-darkBg p-3 flex-row justify-between items-center pt-10">
+      {name !== 'Question' && (
+        <TouchableOpacity onPress={() => goBack()} className="w-10 h-10">
+          <BackButtonIcon />
+        </TouchableOpacity>
+      )}
+
+      <Switch
+        value={colorScheme === 'dark' ? true : false}
+        onValueChange={() =>
           setColorScheme(colorScheme === 'dark' ? 'light' : 'dark')
         }
-        containerStyle={containerStyle}
-        circleStyle={circleStyle}
       />
     </SafeAreaView>
   );
-};
-
-const containerStyle = {
-  marginTop: 16,
-  width: 60,
-  height: 30,
-  borderRadius: 25,
-  paddingRight: 50,
-};
-
-const circleStyle = {
-  width: 25,
-  height: 25,
-  borderRadius: 25,
 };
 
 export default ScreenHeader;
