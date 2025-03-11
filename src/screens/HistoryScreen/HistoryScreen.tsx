@@ -1,5 +1,4 @@
-import {ScrollView, Text, TouchableOpacity} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import {storage} from '../../storage/storage';
 import {History} from '../../types/shared';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -18,12 +17,12 @@ const HistoryScreen: React.FC<HistoryScreenProps> = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-lightBg dark:bg-darkBg p-4">
+    <View className="flex-1 bg-lightBg dark:bg-darkBg p-4">
       {historyies.length === 0 ? (
         <Text className={textColor}>No History Yet</Text>
       ) : (
         <ScrollView>
-          {historyies.map(h => (
+          {historyies.reverse().map(h => (
             <TouchableOpacity
               key={h.id}
               onPress={() => onHistoryPress(h)}
@@ -42,7 +41,7 @@ const HistoryScreen: React.FC<HistoryScreenProps> = ({navigation}) => {
           ))}
         </ScrollView>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 
