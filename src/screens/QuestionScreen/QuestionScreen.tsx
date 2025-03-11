@@ -51,6 +51,7 @@ const QuestionScreen: React.FC<QuestionScreenProps> = ({route, navigation}) => {
             <Card
               city={city as City}
               open={openedCardIds?.find(id => id === city.id) ? true : false}
+              index={index}
             />
           </TouchableOpacity>
         ))}

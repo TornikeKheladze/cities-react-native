@@ -67,8 +67,6 @@ export const useQuestionScreen: UseQuestionScreen = (route, navigation) => {
     },
   });
 
-  const isLoading = pending || !initialFetched;
-
   const cities = useMemo(
     () => data.map(item => item?.data[getRandomInt(0, 9)]),
     [data],
@@ -90,7 +88,7 @@ export const useQuestionScreen: UseQuestionScreen = (route, navigation) => {
       })
     : [];
 
-  const {weatherWithCity} = useQueries({
+  const {weatherWithCity, weatherPending} = useQueries({
     queries: weatherQueries,
     combine: results => {
       const temps = results.map(item => item.data?.temp);
@@ -105,9 +103,12 @@ export const useQuestionScreen: UseQuestionScreen = (route, navigation) => {
             correct: maxTemp === result.data?.temp,
           };
         }),
+        weatherPending: results.some(result => result.isPending),
       };
     },
   });
+
+  const isLoading = pending || !initialFetched || weatherPending;
 
   const renderableList = weatherWithCity.every(value => value !== undefined)
     ? weatherWithCity

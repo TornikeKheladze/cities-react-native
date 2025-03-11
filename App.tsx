@@ -25,6 +25,8 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const queryClient = new QueryClient();
 
+const header = () => <ScreenHeader />;
+
 function App(): React.JSX.Element {
   return (
     <QueryClientProvider client={queryClient}>
@@ -33,22 +35,22 @@ function App(): React.JSX.Element {
           <Stack.Screen
             name="Home"
             component={HomeScreen}
-            options={{title: 'Welcome', header: () => <ScreenHeader />}}
+            options={{title: 'Welcome', header: header}}
           />
           <Stack.Screen
             name="Question"
             component={QuestionScreen}
-            options={{title: 'Question', header: () => <ScreenHeader />}}
+            options={{title: 'Question', header: header}}
           />
           <Stack.Screen
             name="History"
             component={HistoryScreen}
-            options={{title: 'History', header: () => <ScreenHeader />}}
+            options={{title: 'History', header: header}}
           />
           <Stack.Screen
             name="HistoryDetails"
             component={HistoryDetails}
-            options={{title: 'HistoryDetails', header: () => <ScreenHeader />}}
+            options={{title: 'HistoryDetails', header: header}}
           />
         </Stack.Navigator>
       </NavigationContainer>
